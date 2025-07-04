@@ -148,9 +148,12 @@
         `;
 
         fetch(scriptURL, { method: 'POST', body: formData })
-          .then(() => form.reset())
-          .catch(error => console.error("Submission error:", error));
-      });
+  .then(() => {
+    setTimeout(() => {
+      form.reset();
+    }, 1000);
+  });
+
     });
   </script>
 

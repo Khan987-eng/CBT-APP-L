@@ -124,7 +124,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbzWOBMQGzs0i8WPXc0uq623oUEZZXJiXnFZjR68b5BxwHjdTw_aoaY1JXgNiLlxMZGG/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwgEAb-Ri5V4DYJz9EpIw7n9xhS4WWcUu6ROpqSUVx2KsSEyVNFryC79lKRfCTrJVlZ/exec';
       const form = document.getElementById('form');
       const responseEl = document.getElementById('response');
 
@@ -148,12 +148,9 @@
         `;
 
         fetch(scriptURL, { method: 'POST', body: formData })
-  .then(() => {
-    setTimeout(() => {
-      form.reset();
-    }, 1000);
-  });
-
+          .then(() => form.reset())
+          .catch(error => console.error("Submission error:", error));
+      });
     });
   </script>
 

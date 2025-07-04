@@ -26,25 +26,9 @@
       font-weight: bold;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    .banner {
-      margin-top: 10px;
-      width: 100%;
-      max-width: 900px;
-      text-align: center;
-    }
-    .banner img {
-      max-width: 100%;
-      border-radius: 12px;
-    }
-    .countdown {
-      margin-top: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #d32f2f;
-    }
     .form-container {
       background: white;
-      margin: 20px;
+      margin: 30px;
       padding: 25px;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,0,0,0.08);
@@ -119,11 +103,6 @@
 
   <div class="header">Youth Ignite Ujnu – CBT Test</div>
 
-  <div class="banner">
-    <img src="https://via.placeholder.com/900x150?text=Youth+Ignite+CBT+Test+Banner" alt="CBT Test Banner" />
-    <div class="countdown" id="countdown"></div>
-  </div>
-
   <div class="form-container">
     <h2>CBT Registration</h2>
     <form id="form">
@@ -144,24 +123,6 @@
   </div>
 
   <script>
-    const deadline = new Date("2025-07-20T23:59:59").getTime();
-    const countdownEl = document.getElementById("countdown");
-
-    setInterval(() => {
-      const now = new Date().getTime();
-      const distance = deadline - now;
-      if (distance < 0) {
-        countdownEl.innerHTML = "⛔ Registration closed.";
-        document.querySelector("form").style.display = "none";
-        return;
-      }
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((distance % (1000 * 60)) / 1000);
-      countdownEl.innerHTML = `📅 Registration closes in: ${days}d ${hours}h ${mins}m ${secs}s`;
-    }, 1000);
-
     document.addEventListener("DOMContentLoaded", () => {
       const scriptURL = 'https://script.google.com/macros/s/AKfycbwgEAb-Ri5V4DYJz9EpIw7n9xhS4WWcUu6ROpqSUVx2KsSEyVNFryC79lKRfCTrJVlZ/exec';
       const form = document.getElementById('form');
@@ -172,6 +133,7 @@
         const formData = new FormData(form);
         const name = formData.get("name").trim();
 
+        // Immediately show message and trust fetch succeeds
         responseEl.innerHTML = `
           <div class="success-icon">✅</div>
           <strong>${name}, you have successfully registered for the CBT Test organized by Youth Ignite Ujnu.</strong>
@@ -186,18 +148,8 @@
         `;
 
         fetch(scriptURL, { method: 'POST', body: formData })
-  .then(() => {
-    form.reset();
-  })
-  .catch(() => {
-    responseEl.innerHTML = "❌ Something went wrong. Please try again.";
-  });
-
-
-  .catch(() => {
-    responseEl.innerHTML = "❌ Something went wrong. Please try again.";
-  });
-
+          .then(() => form.reset())
+          .catch(error => console.error("Submission error:", error));
       });
     });
   </script>

@@ -186,10 +186,18 @@
         `;
 
         fetch(scriptURL, { method: 'POST', body: formData })
-          .then(() => form.reset())
-          .catch(() => {
-            responseEl.innerHTML = "❌ Something went wrong. Please try again.";
-          });
+  .then(response => response.text())
+  .then(result => {
+    if (result === "Success") {
+      form.reset();
+    } else {
+      throw new Error("Google Apps Script error");
+    }
+  })
+  .catch(() => {
+    responseEl.innerHTML = "❌ Something went wrong. Please try again.";
+  });
+
       });
     });
   </script>
